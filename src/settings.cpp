@@ -2,6 +2,7 @@
 #include "debug.h"
 
 #include "settings.h"
+#include "config.h"
 
 EmulatorSettings nesSettings;
 
@@ -160,16 +161,16 @@ void EmulatorSettings::SetDefaults() {
 	memset(this, 0, sizeof(EmulatorSettings));
 
 	// by default P2 is unmapped
-	keyMap[NES_P1_A] = 78;			// SHIFT
-	keyMap[NES_P1_B] = 68;			// OPTN
-	keyMap[NES_P1_TURBO_A] = 77;	// Alpha
-	keyMap[NES_P1_TURBO_B] = 67;	// X^2
+	keyMap[NES_P1_A] = _(78,77);		// SHIFT
+	keyMap[NES_P1_B] = _(68,67);		// OPTN / Alpha
+	keyMap[NES_P1_TURBO_A] = _(77,76);	// Alpha / XTT
+	keyMap[NES_P1_TURBO_B] = _(67,66);	// X^2 / Frac
 	keyMap[NES_P1_SELECT] = 39;		// F5
 	keyMap[NES_P1_START] = 29;		// F6
-	keyMap[NES_P1_RIGHT] = 27;
-	keyMap[NES_P1_LEFT] = 38;
-	keyMap[NES_P1_UP] = 28;
-	keyMap[NES_P1_DOWN] = 37;
+	keyMap[NES_P1_RIGHT] = _(27,38);
+	keyMap[NES_P1_LEFT] = _(38,58);
+	keyMap[NES_P1_UP] = _(28,49);
+	keyMap[NES_P1_DOWN] = _(37,47);
 	keyMap[NES_SAVESTATE] = 43;		// 'S'
 	keyMap[NES_LOADSTATE] = 25;		// 'L'
 	keyMap[NES_FASTFORWARD] = 57;	// '^'

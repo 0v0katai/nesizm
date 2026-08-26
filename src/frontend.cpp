@@ -7,6 +7,7 @@
 #include "frontend.h"
 #include "imageDraw.h"
 #include "settings.h"
+#include "config.h"
 
 /*
 Menu Layout
@@ -24,6 +25,7 @@ Menu Layout
 const bool bRebuildGfx = false;
 
 bool shouldExit = false;
+bool exitProgram = false;
 
 struct foundFile {
 	char path[48];
@@ -288,6 +290,15 @@ static bool About_Selected(MenuOption* forOption, int key) {
 	return false;
 }
 
+static bool Exit_Selected(MenuOption* forOption, int key) {
+	if (isSelectKey(key)) {
+		exitProgram = true;
+		return true;
+	}
+
+	return false;
+}
+
 static bool Option_RemapButtons(MenuOption* forOption, int key) {
 	if (isSelectKey(key)) {
 		nesFrontend.currentOptions = remapOptions;
@@ -305,7 +316,7 @@ static bool Option_RemapKey(MenuOption* forOption, int key) {
 		PrizmImage::Draw_GradientRect(70, 83, 244, 49, 0b0000000011100000, COLOR_BLACK);
 		PrizmImage::Draw_BorderRect(71, 84, 242, 47, 2, COLOR_AQUAMARINE);
 		const char* text1 = "Press Any Key";
-		const char* text2 = "MENU to Cancel";
+		const char* text2 = _("MENU to Cancel", "HOME to Cancel");
 		int32 w1 = CalcType_Width(&commodore, text1);
 		int32 w2 = CalcType_Width(&commodore, text2);
 		CalcType_Draw(&commodore, text1, 192 - w1 / 2, 91, COLOR_WHITE, 0, 0);
@@ -313,7 +324,7 @@ static bool Option_RemapKey(MenuOption* forOption, int key) {
 		Bdisp_PutDisp_DD_stripe(83, 83 + 49);
 
 		int selectedKey = waitKey();
-		if (selectedKey == 48) { // MENU
+		if (selectedKey == _(48,69)) { // MENU / HOME
 			selectedKey = 0;
 		}
 
@@ -682,7 +693,7 @@ void nes_frontend::Render() {
 
 void nes_frontend::SetMainMenu() {
 	currentOptions = mainOptions;
-	numOptions = 5;
+	numOptions = 6;
 	selectedOption = 0;
 
 	if (nesCart.romFile[0] == 0) {
@@ -748,7 +759,7 @@ void nes_frontend::Run() {
 					break;
 				}
 #endif
-				case KEY_CTRL_OPTN:
+				case _(KEY_CTRL_OPTN, 30002):
 				{
 					// look for "Back" option
 					MenuOption* lastOption = &currentOptions[numOptions - 1];
@@ -801,7 +812,7 @@ void nes_frontend::Run() {
 
 			gotoGame = false;
 		}
-	} while (true);
+	} while (!exitProgram);
 }
 
 void nes_frontend::RunGameLoop() {
@@ -844,6 +855,7 @@ MenuOption mainOptions[] =
 	{"View FAQ", "View .txt file of the same name\nas your ROM", false, ViewFAQ_Selected, nullptr, 0 },
 	{"Options", "Change controls, sound, or\nvideo options", false, Options_Selected, nullptr, 0 },
 	{"About", "Where did this emulator come from?", false, About_Selected, nullptr, 0 },
+	{"Exit", "Exit NESizm", false, Exit_Selected, nullptr, 0 }
 };
 
 MenuOption optionTree[] = 

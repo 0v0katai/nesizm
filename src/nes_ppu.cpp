@@ -9,6 +9,7 @@
 #include "snd/snd.h"
 #include "scope_timer/scope_timer.h"
 #include "frontend.h"
+#include "config.h"
 
 #if TRACE_DEBUG
 static unsigned int ppuWriteBreakpoint = 0x10000;
@@ -604,11 +605,11 @@ void nes_ppu::step() {
 		frameCounter++;
 
 		bool keyDown_fast(unsigned char keyCode);
-		if (keyDown_fast(48)) // Menu
+		if (keyDown_fast(_(48,69))) // Menu / HOME
 		{
 			extern bool shouldExit;
 			shouldExit = true;
-			while (keyDown_fast(48)) {}
+			while (keyDown_fast(_(48,69))) {}
 		}
 
 #if DEBUG

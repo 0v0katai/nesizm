@@ -1,36 +1,13 @@
-# Compiled Object files
-*.slo
-*.lo
-*.o
-*.obj
+# Build files
+/build*/
+/*.g1a
+/*.g3a
 
-# Precompiled Headers
-*.gch
-*.pch
+# Python bytecode
+__pycache__/
 
-# Compiled Dynamic libraries
-*.so
-*.dylib
-*.dll
-
-# Fortran module files
-*.mod
-*.smod
-
-# Compiled Static libraries
-*.lai
-*.la
-*.a
-*.lib
-
-# Executables
-*.exe
-*.out
-*.app
-/DeviceDebug
-/proj/WindowsSim
-/proj/*.db
-/proj/*.opendb
-/DeviceRelease/*.d
-/DeviceRelease/*.bin
-/DeviceRelease/nesizm.g3a
+# Common IDE files
+*.sublime-project
+*.sublime-workspace
+.vscode
+.idea
