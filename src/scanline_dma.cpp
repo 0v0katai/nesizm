@@ -10,9 +10,11 @@
 #include "ptune2_simple/Ptune2_direct.h"
 #include "snd/snd.h"
 #include "frontend.h"
+#include "config.h"
 
 #define LCD_GRAM	0x202
 #define LCD_BASE	0xB4000000
+#define DISPLAY		((volatile unsigned short*)LCD_BASE)
 #define SYNCO() __asm__ volatile("SYNCO\n\t":::"memory");
 
 // DMA0 operation register
@@ -31,6 +33,19 @@ uint16* ppu_workingPalette = &nesPPU.workingPalette[0];
 
 static unsigned int curScan = 0;
 static unsigned int dmaFrame = 0;
+
+static inline void SelectVRAMDataRegister(void){
+    if (PLATFORM == cw) {
+        Bdisp_DDRegisterSelect(0xDA);
+        if (*DISPLAY == 0x32 || *DISPLAY == 0x52)
+            Bdisp_DDRegisterSelect(0x2C);
+        else
+            Bdisp_DDRegisterSelect(LCD_GRAM);
+    }
+    else {
+        Bdisp_DDRegisterSelect(LCD_GRAM);
+    }
+}
 
 static inline void DmaWaitNext(void) {
 	while (1) {
@@ -66,7 +81,7 @@ void flushScanBuffer(int startX, int endX, int startY, int endY, int scanBufferS
 
 	Bdisp_WriteDDRegister3_bit7(1);
 	Bdisp_DefineDMARange(startX, endX, startY, endY);
-	Bdisp_DDRegisterSelect(LCD_GRAM);
+	SelectVRAMDataRegister();
 
 	DmaDrawStrip(scanGroup[curDMABuffer], scanBufferSize);
 	curDMABuffer = 1 - curDMABuffer;
