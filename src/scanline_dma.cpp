@@ -125,7 +125,7 @@ void nes_ppu::renderBGOverscan() {
 			flushScanBuffer(0, 17, 112 * y, 112 * (y+1), 18 * 112 * 2);
 			flushScanBuffer(378, 395, 112 * y, 112 * (y + 1), 18 * 112 * 2);
 		}
-		} else {
+	} else {
 		for (int y = 0; y < 7; y++) {
 			flushScanBuffer(0, 69, 32 * y, 32 * (y + 1), 70 * 32 * 2);
 			flushScanBuffer(326, 395, 32 * y, 32 * (y + 1), 70 * 32 * 2);
