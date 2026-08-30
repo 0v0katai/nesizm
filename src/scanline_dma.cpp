@@ -125,10 +125,10 @@ void nes_ppu::renderBGOverscan() {
 			flushScanBuffer(0, 17, 112 * y, 112 * (y+1), 18 * 112 * 2);
 			flushScanBuffer(378, 395, 112 * y, 112 * (y + 1), 18 * 112 * 2);
 		}
-	} else {
+		} else {
 		for (int y = 0; y < 7; y++) {
-			flushScanBuffer(0, 77, 32 * y, 32 * (y + 1), 78 * 32 * 2);
-			flushScanBuffer(318, 395, 32 * y, 32 * (y + 1), 78 * 32 * 2);
+			flushScanBuffer(0, 69, 32 * y, 32 * (y + 1), 70 * 32 * 2);
+			flushScanBuffer(326, 395, 32 * y, 32 * (y + 1), 70 * 32 * 2);
 		}
 	}
 }
@@ -240,18 +240,16 @@ void nes_ppu::resolveScanline(int scrollOffset) {
 			flushScanBuffer(18 + scanlineOffset, 377 + scanlineOffset, scanline - 9 - bufferLines + 1, scanline - 9, scanBufferSize);
 		}
 	} else {
-		const unsigned int bufferLines = 16;	// 480 bytes * 16 lines = 7680
-		const unsigned int scanBufferSize = bufferLines * 240 * 2;
+		const unsigned int bufferLines = 16;	// 512 bytes * 16 lines = 8192
+		const unsigned int scanBufferSize = bufferLines * 256 * 2;
 
-		// resolve le line
-		unsigned char* scanlineSrc = &scanlineBuffer[8 + scrollOffset];	// with clipping
-		unsigned int* scanlineDest = (unsigned int*)(scanGroup[curDMABuffer] + 240 * curScan);
+		unsigned char* scanlineSrc = &scanlineBuffer[scrollOffset];
+		unsigned int* scanlineDest = (unsigned int*)(scanGroup[curDMABuffer] + 256 * curScan);
 		RenderScanlineBuffer(scanlineSrc, scanlineDest);
 
 		curScan++;
 		if (curScan == bufferLines) {
-			// send DMA
-			flushScanBuffer(78 + scanlineOffset, 317 + scanlineOffset, scanline - 9 - bufferLines + 1, scanline - 9, scanBufferSize);
+			flushScanBuffer(70 + scanlineOffset, 325 + scanlineOffset, scanline - 9 - bufferLines + 1, scanline - 9, scanBufferSize);
 		}
 	}
 }

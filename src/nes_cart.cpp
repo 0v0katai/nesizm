@@ -45,7 +45,7 @@ void nes_cart::allocateBanks(unsigned char* staticAlloced) {
 		unsigned char* heapBank = (unsigned char*) malloc(8192);
 		if (heapBank) {
 			cache[i].ptr = heapBank;
-			allocatedROMBanks = i;
+			allocatedROMBanks = i + 1;
 		} else {
 			break;
 		}
@@ -164,17 +164,17 @@ bool nes_cart::loadROM(const char* withFile) {
 		subMapper = -1;
 	}
 
-	if (format == 2) {
-		if (header[10]) {
-			int ramSize = 64 << (header[10]);
-			numRAMBanks = (ramSize + 8191) / 8192;
-		} else {
-			numRAMBanks = 0;
-		}
+  if (format == 2) {
+        int ramShift = header[10] & 0x0F;
+        int nvramShift = (header[10] >> 4) & 0x0F;
+        int ramSize = ramShift ? (64 << ramShift) : 0;
+        int nvramSize = nvramShift ? (64 << nvramShift) : 0;
+        int totalSize = ramSize > nvramSize ? ramSize : nvramSize;
+        numRAMBanks = (totalSize + 8191) / 8192;
 
-		mapper = ((header[8] & 0x0F) << 8) | (header[7] & 0xF0) | (header[6] >> 4);
-		subMapper = (header[8] & 0xF0) >> 4;
-	}
+        mapper = ((header[8] & 0x0F) << 8) | (header[7] & 0xF0) | (header[6] >> 4);
+        subMapper = (header[8] & 0xF0) >> 4;
+  }
 
 	if (format == 0) {
 		numRAMBanks = 1;

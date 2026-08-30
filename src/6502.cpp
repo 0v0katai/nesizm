@@ -714,9 +714,14 @@ FORCE_INLINE void SED() {
 #if TRACE_DEBUG
 static unsigned int effAddr = -1;
 static unsigned int effByte = 0;
-unsigned int eff_address(unsigned int addr) { effAddr = addr; if (effAddr < 0x2000 || effAddr >= 0x6000) effByte = mainCPU.readNonIO(effAddr); return effAddr; }
+unsigned int eff_address(unsigned int addr) {
+	addr &= 0xFFFF;
+	effAddr = addr;
+	if (effAddr < 0x2000 || effAddr >= 0x6000) effByte = mainCPU.readNonIO(effAddr);
+	return effAddr;
+}
 #else
-#define eff_address(X) (X)
+#define eff_address(X) ((X) & 0xFFFF)
 #endif
 
 FORCE_INLINE void cpu6502_PerformInstruction() {
