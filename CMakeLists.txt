@@ -20,7 +20,6 @@ include_directories(
 add_subdirectory("${CMAKE_CURRENT_SOURCE_DIR}/utils/zx7"            "utils/zx7")
 add_subdirectory("${CMAKE_CURRENT_SOURCE_DIR}/utils/calctype"       "utils/calctype")
 add_subdirectory("${CMAKE_CURRENT_SOURCE_DIR}/utils/snd"            "utils/snd")
-add_subdirectory("${CMAKE_CURRENT_SOURCE_DIR}/utils/scope_timer"    "utils/scope_timer")
 add_subdirectory("${CMAKE_CURRENT_SOURCE_DIR}/utils/ptune2_simple"  "utils/ptune2_simple")
 
 add_executable(nesizm ${SOURCES})
@@ -42,7 +41,7 @@ target_link_options(nesizm PRIVATE
   -Wl,-gc-sections)
 
 target_link_libraries(nesizm PRIVATE
-  zx7 calctype snd scope_timer ptune2_simple
+  zx7 calctype snd ptune2_simple
   -lc -lgcc -lsyscall-${PLATFORM})
 
 if("${FXSDK_PLATFORM_LONG}" STREQUAL fxCG50)
