@@ -1,14 +1,18 @@
 ![Menu Screen](gfx/Menu.png) ![Screenshot1](gfx/Shot1.png) 
 
-# NESizm v 1.00
+# NESizm v 1.10
 
-NESizm is a Nintendo Entertainment System emulator for the Casio Prizm series of graphics calculators. It currently supports the FX-CG10, FX-CG20, FX-CG50, and Graph 90+ E Casio calculators. NESizm was built from the ground up with performance in mind, while maintaining accurate emulation and compatibility wherever possible with clever caching, forced alignment, and hand written assembly where necessary. It runs most titles at 60 FPS with no overclocking on the FX-CG50.
+NESizm is a Nintendo Entertainment System emulator for the Casio Prizm series of graphics calculators. It currently supports the FX-CG10, FX-CG20, FX-CG50, Graph 90+ E and FX-CG100 Casio calculators. NESizm was built from the ground up with performance in mind, while maintaining accurate emulation and compatibility wherever possible with clever caching, forced alignment, and hand written assembly where necessary. It runs most titles at 60 FPS with no overclocking on the FX-CG50 and FX-CG100.
 
 This project has its roots in my interest in early game development technology, as well as the inherent benefits of the Prizm as a platform. There is a large install base of players who can now play NES over many many hours of battery life with 0 input lag from keyboard to display.
 
 ## Install
 
-Copy the nesizm.g3a file (or nesizm_cg10.g3a if you have an FX-CG10) to your Casio Prizm calculator's root path when linked via USB. NES roms (.nes) also should go inside of the root directory. Keep filenames for these files should be simple and less than 32 characters, such as MyGame.nes. The emulator does support the NES 2.0 ROM format, but I haven't extensively tested it.
+- nesizm_cg10.g3a: FX-CG10 and FX-CG20 (OS < 3.00)
+- nesizm_cg50.g3a: FX-CG10 and FX-CG20 (OS >= 3.00), FX-CG50
+- nesizm_cg100.g3a: FX-CG100
+
+Copy one of the above files that suits your Casio Prizm calculator to the root path when linked via USB. NES roms (.nes) also should go inside of the root directory. Keep filenames for these files should be simple and less than 32 characters, such as MyGame.nes. The emulator does support the NES 2.0 ROM format, but I haven't extensively tested it.
 
 ## Usage
 
