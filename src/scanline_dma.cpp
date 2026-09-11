@@ -35,16 +35,11 @@ static unsigned int curScan = 0;
 static unsigned int dmaFrame = 0;
 
 static inline void SelectVRAMDataRegister(void){
-    if (PLATFORM == cw) {
-        Bdisp_DDRegisterSelect(0xDA);
-        if (*DISPLAY == 0x32 || *DISPLAY == 0x52)
-            Bdisp_DDRegisterSelect(0x2C);
-        else
-            Bdisp_DDRegisterSelect(LCD_GRAM);
-    }
-    else {
-        Bdisp_DDRegisterSelect(LCD_GRAM);
-    }
+	Bdisp_DDRegisterSelect(0xDA);
+	if (*DISPLAY == 0x32 || *DISPLAY == 0x52)
+		Bdisp_DDRegisterSelect(0x2C);
+	else
+		Bdisp_DDRegisterSelect(LCD_GRAM);
 }
 
 static inline void DmaWaitNext(void) {
